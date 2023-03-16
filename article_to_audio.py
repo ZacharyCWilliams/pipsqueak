@@ -3,13 +3,17 @@ import requests
 from newspaper import Article
 from gtts import gTTS
 from pydub import AudioSegment
+import nltk
+
+nltk.download('punkt')
 
 def extract_text_from_url(url):
     try:
         article = Article(url)
         article.download()
         article.parse()
-        return article.text
+        article.nlp()  # Perform NLP analysis of article
+        return article.summary  # Return summarized article
     except Exception as e:
         print("Error:", e)
         return None
